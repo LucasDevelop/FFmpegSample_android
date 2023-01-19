@@ -1,10 +1,4 @@
-# For more information about using CMake with Android Studio, read the
-# documentation: https://d.android.com/studio/projects/add-native-code.html
-
-# Sets the minimum version of CMake required to build the native library.
-
 cmake_minimum_required(VERSION 3.18.1)
-
 # Declares and names the project.
 project("av_cpp_sample")
 #设置编译选项
@@ -45,20 +39,10 @@ add_library(
         ${CMAKE_SOURCE_DIR}/src/audio_record.cpp
         ${CMAKE_SOURCE_DIR}/src/audio_resample.cpp
 )
-#add_library(
-#        ${av_cpp_lib_name}
-#        SHARED
-#        ${CMAKE_SOURCE_DIR}/src/log.cpp
-#        ${CMAKE_SOURCE_DIR}/src/audio_record.cpp
-#        ${CMAKE_SOURCE_DIR}/src/audio_resample.cpp
-#)
-
-
 
 # 连接库文件
 target_link_libraries(
         ${PROJECT_NAME}
-#        ${av_cpp_lib_name}
         ${log-lib}
         avcodec
         avdevice
