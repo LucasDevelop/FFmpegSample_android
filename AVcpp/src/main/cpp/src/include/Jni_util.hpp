@@ -4,6 +4,6 @@
 #include <string>
 using  namespace std;
 
-string string2str(JNIEnv *env,jstring jstr);
+const char* jstring2str(JNIEnv *env,jstring jstr);
 
 #endif

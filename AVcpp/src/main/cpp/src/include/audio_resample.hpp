@@ -6,6 +6,7 @@ extern "C"{
     #include "libavcodec/avcodec.h"
     #include "libavformat/avformat.h"
     #include "libswresample/swresample.h"
+#include "libavutil/avutil.h"
 }
 
 class AudioResample
@@ -40,7 +41,7 @@ public:
     int in_sample_rate =48000;
     AVSampleFormat in_sample_fmt = AV_SAMPLE_FMT_S16;
     int in_channels = AV_CH_LAYOUT_STEREO;
-    char *in_pcm_file_path = "/Users/lucas/Downloads/audio.pcm";
+    const char *in_pcm_file_path;
     
    
 
@@ -48,7 +49,7 @@ public:
     int out_sample_rate = 44100;
     AVSampleFormat out_sample_fmt = AV_SAMPLE_FMT_S16;
     int out_channels = AV_CH_LAYOUT_MONO;
-    char *out_pcm_file_path = "/Users/lucas/Downloads/audio_resample.pcm";
+    const char *out_pcm_file_path ;
     
     AudioResample(/* args */);
     ~AudioResample();

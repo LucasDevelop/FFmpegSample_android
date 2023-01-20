@@ -4,7 +4,7 @@
 
 using namespace std;
 
-string string2str(JNIEnv *env,jstring jstr){
+const char* jstring2str(JNIEnv *env,jstring jstr){
     //使用反射String 转换
     char * c= nullptr;
     jclass clazz = env->FindClass("java/lang/String");
@@ -19,6 +19,5 @@ string string2str(JNIEnv *env,jstring jstr){
         c[alen]=0;
     }
     env->ReleaseByteArrayElements(byteArray,ba,0);
-    string str = c;
-    return str;
+    return c;
 }

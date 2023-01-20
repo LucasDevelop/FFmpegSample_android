@@ -60,10 +60,6 @@ int AudioResample::init_codec()
 
     // 创建输入缓冲区
     ret = av_samples_alloc_array_and_samples(&inBuf, &inBufSize, inNbChannles, inSamples, in_sample_fmt, 0);
-    // cout<<"inBufSize:"<<extent<decltype(inBuf[0]), 0>::value<<endl;
-    inBuf[0][0]=1;
-    cout<<"ret:"<<ret<<endl;
-    cout<<"2----["<<inBuf[0]<<"]-----"<<endl;
     if (ret < 0)
     {
         print_av_err(ret, "创建输入缓冲区失败") goto end;
@@ -75,7 +71,7 @@ int AudioResample::init_codec()
     {
         print_av_err(ret, "创建输出缓冲区失败") goto end;
     }
-
+    return 0;
 end:
     if (inBuf)
         av_freep(&inBuf[0]);
@@ -95,34 +91,30 @@ end:
  */
 int AudioResample::convert()
 {
-    cout << "start convert" << endl;
     // 打开文件
     ifstream in_pcm_file(in_pcm_file_path);
     if (!in_pcm_file.is_open())
     {
-        cout << "无法打开文件：" << in_pcm_file_path << endl;
+        ALOGE("无法打开文件：%s",in_pcm_file_path)
         return -1;
     }
 
     ofstream out_pcm_file(out_pcm_file_path);
     if (!out_pcm_file.is_open())
     {
-        cout << "无法打开文件：" << out_pcm_file_path << endl;
+        ALOGE("无法打开文件：%s",out_pcm_file_path)
         return -1;
     }
     int ret = 0;
     int len = 0;
-    cout << "开始重采样" << endl;
     // 开始重采样
     for (;;)
     {
-        cout << "inBufSize:" << inBufSize << endl;
         in_pcm_file.read((char *)inBuf[0], inBufSize);
-        cout << "bbb" << endl;
         // 实际读取大小
         len = in_pcm_file.gcount();
-        cout << "read size:" << len << endl;
-        if (len < 0)
+        ALOGD("read size:%d",len)
+        if (len <= 0)
         {
             cout << "pcm文件读取完毕" << endl;
             break;
@@ -144,7 +136,7 @@ int AudioResample::convert()
     {
         // TODO
         out_pcm_file.write((const char *)outBuf[0], ret * outBytesPerSample);
-        cout << "残留样本数:" << ret << endl;
+        ALOGD("残留样本数:%d",ret)
     }
     out_pcm_file.flush();
 end:
@@ -157,7 +149,6 @@ end:
         av_freep(&outBuf[0]);
     av_freep(&outBuf);
     swr_free(&ctx);
-    cout << "end convert" << endl;
     return 0;
 }
 

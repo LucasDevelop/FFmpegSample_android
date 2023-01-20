@@ -38,6 +38,7 @@ add_library(
         ${CMAKE_SOURCE_DIR}/src/Jni_util.cpp
         ${CMAKE_SOURCE_DIR}/src/audio_record.cpp
         ${CMAKE_SOURCE_DIR}/src/audio_resample.cpp
+        ${CMAKE_SOURCE_DIR}/src/audio_encode.cpp
 )
 
 # 连接库文件
