@@ -2,7 +2,9 @@
 #define AUDIO_ENCODE_HPP
 
 #include "log.hpp"
+#include <fstream>
 
+using namespace std;
 extern "C" {
 #include "libavformat/avformat.h"
 #include "libavcodec/avcodec.h"
@@ -13,9 +15,12 @@ private:
     AVCodecID codecId;
     AVCodec *codec;
     AVCodecContext *codecContext = nullptr;
+    AVFrame *frame= nullptr;
+    AVPacket *packet= nullptr;
+    int encode(AVFrame *avFrame,AVPacket *avPacket,ofstream aacFile);
 public:
     const char *inPcmFilePath = nullptr;
-    AVSampleFormat inSampleFmt = nullptr;
+    AVSampleFormat inSampleFmt;
     int inSampleRate = 0;
     //声道枚举格式
     int inChannels;
