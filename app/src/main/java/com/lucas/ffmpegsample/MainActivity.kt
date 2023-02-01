@@ -26,11 +26,11 @@ class MainActivity : AppCompatActivity() {
         avCpp.resamplePCM(
             File(audioFileDir.value,"audio_48000_2_s16le.pcm").absolutePath,
             48000, "s16", 2,
-            File(audioFileDir.value,"audio_44100_1_s16le.pcm").absolutePath,
-            44100, "s16", 1
+            File(audioFileDir.value,"audio_44100_1_fltp.pcm").absolutePath,
+            44100, "fltp", 1
         )
-        avCpp.pcm2aac( File(audioFileDir.value,"audio_44100_1_s16le.pcm").absolutePath,
-            44100, "s16", 1,
+        avCpp.pcm2aac( File(audioFileDir.value,"audio_44100_1_fltp.pcm").absolutePath,
+            44100, "fltp", 1,
             File(audioFileDir.value,"audio_44100_1.aac").absolutePath)
 
 

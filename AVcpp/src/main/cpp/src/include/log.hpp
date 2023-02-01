@@ -18,7 +18,7 @@ extern "C" {
 #define print_av_err(ret,msg) \
         char errInfo[1024]; \
         av_strerror(ret,errInfo,sizeof(errInfo)); \
-        ALOGE("%s,ret:%d",msg,ret)
+        ALOGE("%s,code:%d,msg:%s",msg,ret,errInfo)
 //        cout<<msg<<",err:"<<errInfo<<endl;
 
 #endif

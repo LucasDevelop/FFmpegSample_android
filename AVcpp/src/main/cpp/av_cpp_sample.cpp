@@ -55,7 +55,7 @@ native_pcm2aac(JNIEnv *env, jobject thiz,
     AudioEncode audioEncode;
     audioEncode.inPcmFilePath = jstring2str(env,inPCMFile);
     audioEncode.outAACFilePath = jstring2str(env,outAACFilePath);
-    audioEncode.inSampleFmt = AV_SAMPLE_FMT_S16;
+    audioEncode.inSampleFmt = AV_SAMPLE_FMT_FLT;
     audioEncode.inChannelLayout = inChannels==1 ? AV_CH_LAYOUT_MONO : AV_CH_LAYOUT_STEREO;
     audioEncode.inSampleRate = inSampleRate;
     if (audioEncode.initCodec()){
