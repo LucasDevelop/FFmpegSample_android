@@ -12,6 +12,8 @@ class AvCpp {
         }
     }
 
+    external fun recordVideo()
+
 
     external fun pcm2aac(
         inPCMFile: String,

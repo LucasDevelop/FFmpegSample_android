@@ -17,13 +17,12 @@ private:
     AVCodecContext *codecContext = nullptr;
     AVFrame *frame= nullptr;
     AVPacket *packet= nullptr;
-    int encode(AVFrame *avFrame,AVPacket *avPacket,ofstream aacFile);
 public:
     const char *inPcmFilePath = nullptr;
     AVSampleFormat inSampleFmt;
     int inSampleRate = 0;
     //声道枚举格式
-    int inChannels;
+    int inChannelLayout;
 
     const char *outAACFilePath = nullptr;
 

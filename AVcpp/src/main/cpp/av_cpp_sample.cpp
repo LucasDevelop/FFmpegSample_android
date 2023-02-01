@@ -4,6 +4,12 @@
 #include "log.hpp"
 #include "Jni_util.hpp"
 #include "audio_resample.hpp"
+#include "video_record.hpp"
+#include "audio_encode.hpp"
+
+extern "C"{
+#include "libavformat/avformat.h"
+}
 
 using namespace std;
 JavaVM *g_JavaVM = NULL;
@@ -46,12 +52,28 @@ native_pcm2aac(JNIEnv *env, jobject thiz,
                jstring inSampleFmt,
                jint inChannels,
                jstring outAACFilePath){
+    AudioEncode audioEncode;
+    audioEncode.inPcmFilePath = jstring2str(env,inPCMFile);
+    audioEncode.outAACFilePath = jstring2str(env,outAACFilePath);
+    audioEncode.inSampleFmt = AV_SAMPLE_FMT_S16;
+    audioEncode.inChannelLayout = inChannels==1 ? AV_CH_LAYOUT_MONO : AV_CH_LAYOUT_STEREO;
+    audioEncode.inSampleRate = inSampleRate;
+    if (audioEncode.initCodec()){
+        audioEncode.convert();
+    }
+}
 
+//视频录制
+JNIEXPORT void JNICALL
+native_record_video(JNIEnv *env, jobject thiz){
+    VideoRecord videoRecord;
+    videoRecord.initDevice();
 }
 
 static JNINativeMethod jniMethods[] = {
         {"resamplePCM", "(Ljava/lang/String;ILjava/lang/String;ILjava/lang/String;ILjava/lang/String;I)I", (void *) native_resamplePCM},
         {"pcm2aac", "(Ljava/lang/String;ILjava/lang/String;ILjava/lang/String;)I", (void *) native_pcm2aac},
+        {"recordVideo", "()V", (void *) native_record_video},
 };
 
 static int registerNativeMethods(JNIEnv *env, const char *className,
