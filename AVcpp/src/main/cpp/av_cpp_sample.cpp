@@ -61,6 +61,7 @@ native_pcm2aac(JNIEnv *env, jobject thiz,
     if (audioEncode.initCodec()){
         audioEncode.convert();
     }
+    return 0;
 }
 
 //视频录制

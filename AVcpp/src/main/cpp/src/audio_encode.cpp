@@ -189,14 +189,15 @@ bool AudioEncode::convert() {
             print_av_err(ret, "frame not writeable.")
             break;
         }
-        if (frame->format == AV_SAMPLE_FMT_S16) {
+//        if (frame->format == AV_SAMPLE_FMT_S16) {
             ret = av_samples_fill_arrays(frame->data, frame->linesize, (uint8_t *) pcm_buf, frame->channels,
                                          frame->nb_samples, (AVSampleFormat) frame->format, 0);
+            ALOGD("encode size:%d",ret);
             if (ret < 0) {
                 print_av_err(ret, "fill sample arrays err")
                 break;
             }
-        }
+//        }
         //编码
         pts += frame->nb_samples;
         frame->pts = pts; // 使用采样率作为pts的单位，具体换算成秒 pts*1/采样率
